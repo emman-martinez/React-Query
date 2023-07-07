@@ -6,7 +6,7 @@ export default function IssuesList() {
     fetch("/api/issues").then((res) => res.json())
   );
 
-  const { isLoading, error, data } = issuesQuery;
+  const { isLoading, data } = issuesQuery;
 
   return (
     <div>
