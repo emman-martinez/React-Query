@@ -1,21 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 import { IssueItem } from "./IssueItem";
+import axios from "axios";
 
-export default function IssuesList() {
-  const issuesQuery = useQuery(["issues"], () =>
-    fetch("/api/issues").then((res) => res.json())
+const fetchIssuesList = async (labels) => {
+  const labelsString = labels.map((label) => `labels[]=${label}`).join("&");
+  const res = await axios.get(`/api/issues?${labelsString}`);
+  return res.data;
+};
+
+export default function IssuesList({ labels }) {
+  const issuesQuery = useQuery(["issues", { labels }], () =>
+    fetchIssuesList(labels)
   );
-
-  const { isLoading, data } = issuesQuery;
 
   return (
     <div>
       <h2>Issues List</h2>
-      {isLoading ? (
+      {issuesQuery.isLoading ? (
         <p>Loading...</p>
       ) : (
         <ul className="issues-list">
-          {data.map((issue) => (
+          {issuesQuery.data.map((issue) => (
             <IssueItem
               key={issue.id}
               assignee={issue.assignee}
