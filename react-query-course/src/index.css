@@ -273,8 +273,8 @@ form input {
 .issue-details .created-by {
   font-weight: bold;
 }
-.issue-details .open,
-.issue-details .closed {
+.issue-details.open,
+.issue-details.closed {
   color: white;
   display: flex;
   align-items: center;
@@ -284,10 +284,10 @@ form input {
   border-radius: 999px;
   font-size: 1rem;
 }
-.issue-details .open {
+.issue-details.open {
   background: green;
 }
-.issue-details .closed {
+.issue-details.closed {
   background: red;
 }
 .issue-options {
