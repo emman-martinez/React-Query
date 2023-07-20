@@ -6,6 +6,8 @@ const fetchUsers = async ({ queryKey }) => {
   return res.json();
 };
 export function useUserData(userId) {
-  const usersData = useQuery(["users", userId], fetchUsers);
+  const usersData = useQuery(["users", userId], fetchUsers, {
+    staleTime: 1000 * 60 * 5,
+  });
   return usersData;
 }

@@ -7,6 +7,8 @@ const fetchLabels = async () => {
 };
 
 export function useLabelsData() {
-  const labelsQuery = useQuery(["labels"], fetchLabels);
+  const labelsQuery = useQuery(["labels"], fetchLabels, {
+    staleTime: 1000 * 60 * 60,
+  });
   return labelsQuery;
 }
