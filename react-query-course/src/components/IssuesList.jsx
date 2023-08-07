@@ -2,12 +2,16 @@ import { useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { IssueItem } from "./IssueItem";
+import fetchWithError from "../helpers/fetchWithError";
 
 const fetchIssuesList = async (labels, status) => {
   const statusString = status ? `&status=${status}` : "";
   const labelsString = labels.map((label) => `labels[]=${label}`).join("&");
-  const res = await axios.get(`/api/issues?${labelsString}${statusString}`);
-  return res.data;
+  const res = await fetchWithError(
+    `/api/issues?${labelsString}${statusString}`
+  );
+
+  return res;
 };
 
 const fetchIssuesSearch = async (searchValue) => {
@@ -56,6 +60,8 @@ export default function IssuesList({ labels, status }) {
       <h2>Issues List</h2>
       {issuesQuery.isLoading ? (
         <p>Loading...</p>
+      ) : issuesQuery.isError ? (
+        <p>{issuesQuery.error.message}</p>
       ) : searchQuery.fetchStatus === "idle" && searchQuery.isLoading ? (
         <ul className="issues-list">
           {issuesQuery.data.map((issue) => (
