@@ -20,12 +20,8 @@ const fetchIssuesSearch = async (searchValue) => {
 };
 
 export default function IssuesList({ labels, status }) {
-  const issuesQuery = useQuery(
-    ["issues", { labels, status }],
-    () => fetchIssuesList(labels, status),
-    {
-      staleTime: 1000 * 60,
-    }
+  const issuesQuery = useQuery(["issues", { labels, status }], () =>
+    fetchIssuesList(labels, status)
   );
   const [searchValue, setSearchValue] = useState("");
   const searchQuery = useQuery(
